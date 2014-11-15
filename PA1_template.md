@@ -8,10 +8,11 @@ output: html_document
 This is an R Markdown document. 
 It will be used to answer teh questions of Reproductible Research Peer Assessment 1
 
-Loading and preprocessing the data
+### Loading and preprocessing the data
 
 ```r
 library(knitr)
+options(scipen = 1, digits = 2)
 ```
 
 
@@ -22,7 +23,7 @@ library(knitr)
 dat<-read.csv("activity.csv")
 ```
 
-What is mean total number of steps taken per day?
+### What is mean total number of steps taken per day?
 
 -Make a histogram of the total number of steps taken each day
 
@@ -32,7 +33,7 @@ sdat<-aggregate(steps ~ date, data = dat, sum)
 with(sdat, hist(steps, breaks=53, col=2, main= "Total Steps per Day", xlab="Steps"))
 ```
 
-![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png) 
+![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-1.png) 
 
 -Calculate and report the mean and median total number of steps taken per day
 
@@ -42,7 +43,7 @@ mean(sdat$steps)
 ```
 
 ```
-## [1] 10766.19
+## [1] 10766
 ```
 
 ```r
@@ -52,9 +53,9 @@ median(sdat$steps)
 ```
 ## [1] 10765
 ```
-The mean is 1.0766189 &times; 10<sup>4</sup> and the median is 10765
+**The mean is 10766.19 and the median is 10765**
 
-What is the average daily activity pattern?
+### What is the average daily activity pattern?
 
 -Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
 
@@ -64,7 +65,7 @@ ddat<-aggregate(steps ~ interval, data = dat, mean)
 with (ddat, plot(interval, steps, type="l"))
 ```
 
-![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png) 
+![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png) 
 
 -Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
@@ -74,9 +75,9 @@ ms<-max(ddat$steps)
 rowofmax<-which.max(ddat$steps)
 mint<-ddat[rowofmax,1]
 ```
-The maximum number of steps are 206.1698113 and occurs on 835th interval
+**The maximum number of steps are 206.17 and occurs on 835th interval**
 
-Imputing missing values
+### Imputing missing values
 
 -Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs)
 
@@ -87,7 +88,7 @@ xdat<-na.omit(dat) #subset with no missing values
 nnm<-nrow(xdat)    #number of rows with no missing valuee
 nm<-nt-nnm         #number of rows with missing values
 ```
-Total missing values are 2304
+**Total missing values are 2304**
 
 -Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
 
@@ -116,14 +117,14 @@ nsdat<-aggregate(steps ~ date, data = ndat, sum)
 with(nsdat, hist(steps, breaks=61, col=2, main= "Total Steps per Day", xlab="Steps"))
 ```
 
-![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png) 
+![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-1.png) 
 
 ```r
 mean(nsdat$steps)
 ```
 
 ```
-## [1] 10766.19
+## [1] 10766
 ```
 
 ```r
@@ -131,14 +132,14 @@ median(nsdat$steps)
 ```
 
 ```
-## [1] 10766.19
+## [1] 10766
 ```
-The new mean is 1.0766189 &times; 10<sup>4</sup> and the new median is 1.0766189 &times; 10<sup>4</sup>
+**The new mean is 10766.19 and the new median is 10766.19**
 
-**There is no actual impact on data before and after imputing missing data
-mean remain the same while we observe a slight chenge in median**
+**There is no actual impact on data before and after imputing missing data**
+**mean remain the same while we observe a slight chenge in median**
 
-Are there differences in activity patterns between weekdays and weekends?
+### Are there differences in activity patterns between weekdays and weekends?
 
 -Create a new factor variable in the dataset with two levels -- "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
 
@@ -181,4 +182,4 @@ print(ggplot(ddatall, aes(x=interval, y=steps)) +
       +  theme_bw())
 ```
 
-![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11-1.png) 
+![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10-1.png) 
